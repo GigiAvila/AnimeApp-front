@@ -32,6 +32,6 @@ export const LoginIconWrapper = styled.div`
   > img {
     width: 100%;
     height: auto;
-    animation: ${rotateAnimation} 3s linear infinite; /* Puedes ajustar la duración y el tipo de animación según tus preferencias */
+    animation: ${rotateAnimation} 3s linear infinite;
   }
 `

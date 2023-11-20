@@ -100,7 +100,7 @@ export const CloudWrapperLeft = styled.div`
 export const CloudWrapperBottom = styled.div`
   position: absolute;
   bottom: -8vh;
-  right: -5vw;
+  right: -2vw;
   width: 18vw;
   z-index: 6;
   animation: ${floatAnimation} 3s infinite;
