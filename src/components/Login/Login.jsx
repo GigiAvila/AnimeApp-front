@@ -1,21 +1,21 @@
 import React, { useState } from 'react'
 import BgLogin from './BgLogin'
-import LoginForm from './LoginForm'
+import Signin from './Signin'
 import LoginButton from './LoginButton'
 
 const Login = () => {
-  const [showLoginForm, setShowLogginForm] = useState(false)
+  const [showLoginForm, setShowLoginForm] = useState(false)
 
   return (
     <>
       <LoginButton
         showLoginForm={showLoginForm}
-        setShowLogginForm={setShowLogginForm}
+        setShowLoginForm={setShowLoginForm}
       />
       <BgLogin />
-      <LoginForm
+      <Signin
         showLoginForm={showLoginForm}
-        setShowLogginForm={setShowLogginForm}
+        setShowLoginForm={setShowLoginForm}
       />
     </>
   )

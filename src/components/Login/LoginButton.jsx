@@ -2,11 +2,11 @@ import React from 'react'
 import LoginIcon from '../../assets/carpa.png'
 import { LoginButtonContainer, LoginIconWrapper } from './LoginButton.Styles'
 
-const LoginButton = ({ showLoginForm, setShowLogginForm }) => {
+const LoginButton = ({ showLoginForm, setShowLoginForm }) => {
   return (
     <LoginButtonContainer
       onClick={() => {
-        setShowLogginForm(!showLoginForm)
+        setShowLoginForm(!showLoginForm)
       }}
     >
       <LoginIconWrapper>

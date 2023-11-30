@@ -1,3 +1,7 @@
+
+
+                
+
 @font-face {
   font-family: 'Manga';
   src: url('./src/assets/mangat.ttf') format('truetype');
@@ -7,4 +11,5 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+
 }

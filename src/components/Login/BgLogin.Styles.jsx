@@ -29,13 +29,14 @@ export const LoginContainer = styled.div`
   width: 100vw;
   height: 100vh;
 
+
   h2 {
     font-family: 'Manga', sans-serif;
     position: absolute;
-    top: 40vh;
+    top: 35vh;
     left: 25vw;
     font-size: 8vw;
-    z-index: 4;
+    z-index: 5;
     letter-spacing: 20px;
   }
 `
@@ -43,17 +44,14 @@ export const BgPatternLogin = styled.div`
   width: 100vw;
   height: 100vh;
   background: linear-gradient(to bottom, #ecece6, #cccbbb);
-  // background-image: url(${BgLogin});
-  // background-repeat: no-repeat;
-  // background-size: cover;
-  // background-position: center;
+
 `
 export const Circle = styled.div`
   width: 650px;
   height: 650px;
   position: absolute;
-  top: 20vh;
-  left: 32vw;
+  top: 7vh;
+  left: 28vw;
   border-radius: 100%;
   background-color: #8b312c;
   z-index: 2;
@@ -99,8 +97,8 @@ export const CloudWrapperLeft = styled.div`
 
 export const CloudWrapperBottom = styled.div`
   position: absolute;
-  bottom: -8vh;
-  right: -2vw;
+  bottom: -7vh;
+  right: -5vw;
   width: 18vw;
   z-index: 6;
   animation: ${floatAnimation} 3s infinite;
@@ -113,8 +111,8 @@ export const CloudWrapperBottom = styled.div`
 `
 export const CloudWrapperBottom1 = styled.div`
   position: absolute;
-  bottom: -8vh;
-  right: 5vw;
+  bottom: -7vh;
+  right: 7vw;
   width: 18vw;
   z-index: 6;
   animation: ${floatAnimation} 3s infinite;
@@ -128,8 +126,8 @@ export const CloudWrapperBottom1 = styled.div`
 
 export const CloudWrapperBottom2 = styled.div`
   position: absolute;
-  bottom: -8vh;
-  right: 17vw;
+  bottom: -7vh;
+  right: 19vw;
   width: 22vw;
   z-index: 6;
   animation: ${floatAnimation} 3s infinite;
@@ -143,8 +141,8 @@ export const CloudWrapperBottom2 = styled.div`
 
 export const CloudWrapperBottom3 = styled.div`
   position: absolute;
-  bottom: -10vh;
-  right: 30vw;
+  bottom: -7vh;
+  right: 33vw;
   width: 15vw;
   z-index: 6;
   animation: ${floatAnimation} 3s infinite;
@@ -158,8 +156,8 @@ export const CloudWrapperBottom3 = styled.div`
 
 export const CloudWrapperBottom4 = styled.div`
   position: absolute;
-  bottom: -12vh;
-  right: 40vw;
+  bottom: -7vh;
+  right: 43vw;
   width: 20vw;
   z-index: 6;
   animation: ${floatAnimation} 3s infinite;
@@ -173,8 +171,8 @@ export const CloudWrapperBottom4 = styled.div`
 
 export const CloudWrapperBottom5 = styled.div`
   position: absolute;
-  bottom: -12vh;
-  right: 54vw;
+  bottom: -7vh;
+  right: 56vw;
   width: 16vw;
   z-index: 6;
   animation: ${floatAnimation} 3s infinite;
@@ -187,7 +185,7 @@ export const CloudWrapperBottom5 = styled.div`
 `
 export const CloudWrapperBottom6 = styled.div`
   position: absolute;
-  bottom: -13vh;
+  bottom: -7vh;
   right: 65vw;
   width: 23vw;
   z-index: 6;
@@ -202,7 +200,7 @@ export const CloudWrapperBottom6 = styled.div`
 
 export const CloudWrapperBottom7 = styled.div`
   position: absolute;
-  bottom: -10vh;
+  bottom: -7vh;
   right: 82vw;
   width: 17vw;
   z-index: 6;

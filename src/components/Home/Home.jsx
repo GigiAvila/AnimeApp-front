@@ -1,14 +1,12 @@
 import React from 'react'
-import { HomeContainer } from './Home.Styles'
-import Navbar from './Navbar/Navbar'
+import { PlatformContainer } from './Home.Styles'
 import Platform from './Platform/Platform'
 
 const Home = () => {
   return (
-    <HomeContainer>
-      <Navbar />
+    <PlatformContainer>
       <Platform />
-    </HomeContainer>
+    </PlatformContainer>
   )
 }
 

@@ -1,57 +1,87 @@
-import React from 'react'
-import {
-  LoginFormBg,
-  LoginImageWrapper,
-  LoginContainer,
-  StyledLoginForm
-} from './LoginForm.Styles'
-import LoginImage from '../../assets/Nezuko.webp'
-import { useForm } from 'react-hook-form'
+import React, { useState } from 'react';
+import { StyledLoginForm, Form, PassButton, SubmitButton } from './LoginForm.Styles';
+import { useForm } from 'react-hook-form';
+import { useAuth } from '../../hooks/useAuth';
+import { useNavigate } from 'react-router-dom';
+import { USERDATA } from '../../data/UserData';
+import Modal from '../Modal/Modal';
+import { NOTFOUNDGIF } from '../../data/GifList';
 
-const LoginForm = ({ showLoginForm, setShowLoginForm }) => {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors }
-  } = useForm()
+const LoginForm = ({ isModalOpen, setIsModalOpen }) => {
+  const [showLabel, setShowLabel] = useState(false);
+  const [invalidCredentials, setInvalidCredentials] = useState(false);
+  const { login } = useAuth();
+  const navigate = useNavigate();
+
+  const { register, handleSubmit, formState: { errors } } = useForm();
 
   const onSubmit = (data) => {
-    console.log(data)
-  }
+    console.log(data);
 
-  return showLoginForm ? (
-    <LoginFormBg>
-      <LoginContainer>
-        <StyledLoginForm onSubmit={handleSubmit(onSubmit)}>
-          <h2>Login</h2>
+    const user = USERDATA.find((userData) => {
+      return (
+        userData.email.trim() === data.email.trim() &&
+        userData.password.toString().trim() === data.password.trim()
+      );
+    });
 
-          <label htmlFor='email'>Email:</label>
+    if (user) {
+      login(user);
+      navigate('/home');
+    } else {
+      setInvalidCredentials(true);
+      setIsModalOpen(true);
+    }
+  };
+
+  const handleForgotPassword = () => {
+    console.log('Forgot Password clicked');
+  };
+
+  return (
+    <>
+      <StyledLoginForm onSubmit={handleSubmit(onSubmit)}>
+        <h2>Access</h2>
+        <Form>
+          <label htmlFor='email' style={{ display: showLabel ? 'block' : 'none' }}>Email:</label>
           <input
             type='text'
             id='email'
+            placeholder={showLabel ? '' : 'Email'}
             {...register('email', { required: true })}
+            onChange={() => setShowLabel(true)}
           />
           {errors.email && <span>Este campo es requerido</span>}
 
-          <label htmlFor='password'>Password:</label>
+          <label htmlFor='password' style={{ display: showLabel ? 'block' : 'none' }}>Password:</label>
           <input
             type='password'
             id='password'
+            placeholder={showLabel ? '' : 'Password'}
             {...register('password', { required: true })}
+            onChange={() => setShowLabel(true)}
           />
+          <PassButton type='button' onClick={handleForgotPassword}>
+            FORGOT PASSWORD?
+          </PassButton>
           {errors.password && <span>Este campo es requerido</span>}
 
-          <button type='submit'>Iniciar sesión</button>
-        </StyledLoginForm>
-        <LoginImageWrapper>
-          <img
-            src={LoginImage}
-            alt='Login Image. Nezuko from Demon Slayer Anime'
-          />
-        </LoginImageWrapper>
-      </LoginContainer>
-    </LoginFormBg>
-  ) : null
-}
+          <SubmitButton type='submit'>Access</SubmitButton>
+        </Form>
+      </StyledLoginForm>
 
-export default LoginForm
+      {isModalOpen ? (
+  <Modal
+    setIsModalOpen={setIsModalOpen}
+    title={'Oops, No Luck!'}
+    gif={NOTFOUNDGIF}
+    content={'Uh-oh! It seems like we can\'t find an account with that email and password combo. Maybe double-check your details and give it another shot? 🕵️‍♂️'}
+    textButton={'Try Again'}
+  />
+) : null}
+
+    </>
+  );
+};
+
+export default LoginForm;
