@@ -1,8 +1,36 @@
 import styled from 'styled-components'
+import verifyBg from '../../assets/verifyBg.jpg'
+
+export const BgAccountContainer = styled.div`
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  > h1 {
+    padding: 1vw;
+    font-size: 3vw;
+  }
+
+  > p {
+    font-size: 1.5vw;
+  }
+`
+
+export const BgImage = styled.div`
+  width: 100%;
+  height: 35%;
+  background-image: url(${verifyBg});
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+`
 
 export const ProfileInformationContainer = styled.form`
   width: 100%;
-  height: 100%;
+  height: 65%;
   display: flex;
   gap: 2vw;
   align-items: center;
@@ -11,21 +39,21 @@ export const ProfileInformationContainer = styled.form`
 `
 
 export const AvatarWrapper = styled.div`
-  width: 200px;
-  height: 200px;
+  width: 250px;
+  height: 250px;
   display: flex;
   flex-direction: column;
   position: relative;
+
+  > img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+  }
 `
 
-export const AvatarPreview = styled.img`
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-  object-fit: cover;
-`
-
-export const AvatarEdition = styled.div`
+export const AvatarEdition = styled.button`
   font-size: 0.7vw;
   width: 3vw;
   padding: 0.2vw;
@@ -37,12 +65,6 @@ export const AvatarEdition = styled.div`
   position: absolute;
   bottom: 0;
   right: 0;
-  cursor: pointer;
-`
-
-export const AvatarLabel = styled.label`
-  width: 3vw;
-  padding: 0.2vw;
   cursor: pointer;
 
   > img {
@@ -82,23 +104,24 @@ export const StyledLabel = styled.label`
 `
 
 export const StyledInput = styled.input`
-  height: 4vh;
-  width: 25vw;
+  height: 2vh;
+  width: 20vw;
   padding: 1vw 0.3vw;
   border-radius: 4px;
   border: none;
 `
 
 export const StyledSelect = styled.select`
-  height: 4vh;
-  width: 25vw;
+  height: 2vh;
+  width: 20vw;
+  padding: 1vw 0.3vw;
   border-radius: 4px;
   border: none;
+  background-color: white;
   color: black;
 
-  > option {
-    height: 4vh;
-    width: 20vw;
+  & option {
+    background-color: white;
     color: black;
   }
 `

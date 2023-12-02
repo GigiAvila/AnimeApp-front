@@ -1,49 +1,68 @@
-import React, { useState } from 'react';
-import { StyledLoginForm, Form, PassButton, SubmitButton } from './LoginForm.Styles';
-import { useForm } from 'react-hook-form';
-import { useAuth } from '../../hooks/useAuth';
-import { useNavigate } from 'react-router-dom';
-import { USERDATA } from '../../data/UserData';
-import Modal from '../Modal/Modal';
-import { NOTFOUNDGIF } from '../../data/GifList';
+import React, { useState } from 'react'
+import {
+  StyledLoginForm,
+  Form,
+  PassButton,
+  SubmitButton
+} from './LoginForm.Styles'
+import { useForm } from 'react-hook-form'
+import { useFetchOtakuData } from '../../context/FetchOtakuDataContext'
+import { useNavigate } from 'react-router-dom'
+import Modal from '../Modal/Modal'
+import { NOTFOUNDGIF } from '../../data/GifList'
+import { useAuth } from '../../hooks/useAuth'
 
 const LoginForm = ({ isModalOpen, setIsModalOpen }) => {
-  const [showLabel, setShowLabel] = useState(false);
-  const [invalidCredentials, setInvalidCredentials] = useState(false);
-  const { login } = useAuth();
-  const navigate = useNavigate();
+  const [showLabel, setShowLabel] = useState(false)
+  const [invalidCredentials, setInvalidCredentials] = useState(false)
+  const { loginOtaku, fetchOtakuData } = useFetchOtakuData()
+  const navigate = useNavigate()
+  const { login } = useAuth()
 
-  const { register, handleSubmit, formState: { errors } } = useForm();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors }
+  } = useForm()
 
-  const onSubmit = (data) => {
-    console.log(data);
+  const onSubmit = async (data) => {
+    try {
+      const response = await loginOtaku(data.email, data.password)
 
-    const user = USERDATA.find((userData) => {
-      return (
-        userData.email.trim() === data.email.trim() &&
-        userData.password.toString().trim() === data.password.trim()
-      );
-    });
+      console.log('Response from loginOtaku:', response)
 
-    if (user) {
-      login(user);
-      navigate('/home');
-    } else {
-      setInvalidCredentials(true);
-      setIsModalOpen(true);
+      if (response && response.success) {
+        const user = fetchOtakuData.data.find(
+          (user) => user.email === data.email
+        )
+        login(user)
+        navigate('/home')
+      } else {
+        setInvalidCredentials(true)
+        setIsModalOpen(true)
+        console.log('Modal abierto')
+      }
+    } catch (error) {
+      console.error('Error during login:', error)
+      console.log(error)
     }
-  };
+  }
 
   const handleForgotPassword = () => {
-    console.log('Forgot Password clicked');
-  };
+    console.log('Forgot Password clicked')
+  }
 
   return (
     <>
       <StyledLoginForm onSubmit={handleSubmit(onSubmit)}>
         <h2>Access</h2>
         <Form>
-          <label htmlFor='email' style={{ display: showLabel ? 'block' : 'none' }}>Email:</label>
+          <label
+            htmlFor='email'
+            style={{ display: showLabel ? 'block' : 'none' }}
+          >
+            Email:
+          </label>
           <input
             type='text'
             id='email'
@@ -53,7 +72,12 @@ const LoginForm = ({ isModalOpen, setIsModalOpen }) => {
           />
           {errors.email && <span>Este campo es requerido</span>}
 
-          <label htmlFor='password' style={{ display: showLabel ? 'block' : 'none' }}>Password:</label>
+          <label
+            htmlFor='password'
+            style={{ display: showLabel ? 'block' : 'none' }}
+          >
+            Password:
+          </label>
           <input
             type='password'
             id='password'
@@ -71,17 +95,18 @@ const LoginForm = ({ isModalOpen, setIsModalOpen }) => {
       </StyledLoginForm>
 
       {isModalOpen ? (
-  <Modal
-    setIsModalOpen={setIsModalOpen}
-    title={'Oops, No Luck!'}
-    gif={NOTFOUNDGIF}
-    content={'Uh-oh! It seems like we can\'t find an account with that email and password combo. Maybe double-check your details and give it another shot? 🕵️‍♂️'}
-    textButton={'Try Again'}
-  />
-) : null}
-
+        <Modal
+          setIsModalOpen={setIsModalOpen}
+          title={'Oops, No Luck!'}
+          gif={NOTFOUNDGIF}
+          content={
+            "Uh-oh! It seems like we can't find an account with that email and password combo. Maybe double-check your details and give it another shot? 🕵️‍♂️"
+          }
+          textButton={'Try Again'}
+        />
+      ) : null}
     </>
-  );
-};
+  )
+}
 
-export default LoginForm;
+export default LoginForm
