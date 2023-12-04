@@ -5,9 +5,10 @@ import Profile from '../components/Profile/Profile'
 
 const ProfilePage = () => {
   return (
-    <PageContainer>    
+    <PageContainer>
       <Navbar />
-      <Profile /> </PageContainer>
+      <Profile />
+    </PageContainer>
   )
 }
 

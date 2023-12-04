@@ -61,8 +61,44 @@ export const FetchOtakuDataProvider = ({ children }) => {
     }
   }
 
-  const editOtaku = async (id, newData) => {
+  const changePassword = async (email, newData) => {
     try {
+      console.log(email)
+      console.log(newData)
+
+      const urlSearchParams = new URLSearchParams()
+
+      for (const key in newData) {
+        urlSearchParams.append(key, newData[key])
+      }
+
+      const response = await fetch(
+        `http://localhost:4001/api/otakus/change-password/${email}`,
+        {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+          },
+          body: urlSearchParams.toString()
+        }
+      )
+
+      const result = await response.json()
+      console.log('PUT response:', result)
+
+      if (response.ok) {
+        fetchOtakuDataFromApi()
+      } else {
+        console.error('Error updating password:', result.message)
+      }
+    } catch (error) {
+      console.error('Error updating password:', error)
+    }
+  }
+
+  const editOtaku = async (email, newData) => {
+    try {
+      console.log(email)
       console.log('newdata', newData)
       const formData = new FormData()
 
@@ -75,10 +111,13 @@ export const FetchOtakuDataProvider = ({ children }) => {
         formData.append('avatar', avatar.files[0])
       }
 
-      const response = await fetch(`http://localhost:4001/api/otakus/${id}`, {
-        method: 'PUT',
-        body: formData
-      })
+      const response = await fetch(
+        `http://localhost:4001/api/otakus/${email}`,
+        {
+          method: 'PUT',
+          body: formData
+        }
+      )
 
       const result = await response.json()
       console.log('PUT response:', result)
@@ -159,6 +198,7 @@ export const FetchOtakuDataProvider = ({ children }) => {
     deleteOtaku,
     loginOtaku,
     sendGmail,
+    changePassword,
     error
   }
 

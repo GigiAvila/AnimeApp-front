@@ -3,11 +3,15 @@ import {
   ProfileHeader,
   ProfileSection,
   PremiumContainer,
-  PremiumIconWrapper
+  PremiumIconWrapper,
+  ProfileOptions,
+  ProfileOptionSelected
 } from './Profile.Styles'
 import ProfileInformation from './ProfileInformation/ProfileInformation'
 import { useAuth } from '../../hooks/useAuth'
 import PremiumIcon from '../../assets/premium.png'
+import { ProfileMenu } from './ProfileMenu'
+import { Outlet } from 'react-router-dom'
 
 const Profile = () => {
   const { user } = useAuth()
@@ -29,7 +33,12 @@ const Profile = () => {
           </>
         ) : null}
       </ProfileHeader>
-      <ProfileInformation />
+      <ProfileOptions>
+        <ProfileMenu />
+        <ProfileOptionSelected>
+          <Outlet />
+        </ProfileOptionSelected>
+      </ProfileOptions>
     </ProfileSection>
   )
 }

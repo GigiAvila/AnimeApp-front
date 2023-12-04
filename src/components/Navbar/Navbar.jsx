@@ -36,9 +36,6 @@ const Navbar = () => {
       <NavbarIconWrapper to='/history'>
         <img src={HistorialIcon} alt='Previous readings Icons' />
       </NavbarIconWrapper>
-      <NavbarIconWrapper to='/settings'>
-        <img src={SettingIcon} alt='Favorites anime Icons' />
-      </NavbarIconWrapper>
       <NavbarIconWrapper onClick={() => logout()} to='/'>
         <img src={LogoutIcon} alt='Logout Icon' />
       </NavbarIconWrapper>

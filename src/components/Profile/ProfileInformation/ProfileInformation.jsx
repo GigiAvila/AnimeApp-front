@@ -10,19 +10,20 @@ import {
   StyledSelect,
   InputWrapper,
   AvatarLabel,
-  AvatarPreview
+  AvatarPreview,
+  ProfileInformationOuterContainer
 } from './ProfileInformation.Styles'
+import { useFetchOtakuData } from '../../../context/FetchOtakuDataContext'
 import { useAuth } from '../../../hooks/useAuth'
 import { useForm } from 'react-hook-form'
 import { COUNTRIES } from '../../../data/CountryList'
 import { LANGUAGES } from '../../../data/Languages'
 import { PAYMENTMETHODS } from '../../../data/PaymentMethod'
 import PencilIcon from '../../../assets/lapiz.png'
-import { useFetchOtakuData } from '../../../context/FetchOtakuDataContext'
 
 const ProfileInformation = () => {
   const { editOtaku } = useFetchOtakuData()
-  const { user } = useAuth()
+  const { user, login } = useAuth()
   const { register, handleSubmit, setValue, formState } = useForm({
     defaultValues: {
       name: user.name,
@@ -52,9 +53,10 @@ const ProfileInformation = () => {
   }
 
   const onSubmit = (data) => {
-    console.log('user', user)
-    console.log('data', data)
-    editOtaku(user._id, data)
+    console.log('previous user info', user)
+    console.log('user with data form changed ', data)
+    editOtaku(user.email, data)
+    login(data)
   }
 
   React.useEffect(() => {
@@ -70,132 +72,79 @@ const ProfileInformation = () => {
   }, [setValue, user])
 
   return (
-    <ProfileInformationContainer onSubmit={handleSubmit(onSubmit)}>
-      <AvatarWrapper>
-        {avatarPreview ? (
-          <AvatarPreview src={avatarPreview} alt='Avatar Preview' />
-        ) : (
-          <AvatarPreview src={user.avatar} alt='My profile photo' />
-        )}
-        <AvatarEdition>
-          <AvatarLabel htmlFor='avatar-input'>
-            <img src={PencilIcon} alt='Edit Avatar' />
-          </AvatarLabel>
-          <input
-            name='avatar'
-            type='file'
-            id='avatar-input'
-            {...register('avatar')}
-            onChange={handleAvatarChange}
-            style={{
-              position: 'absolute',
-              width: '100%',
-              height: '100%',
-              overflow: 'hidden',
-              clip: 'rect(1px, 1px, 1px, 1px)',
-              opacity: 0
-            }}
-          />
-        </AvatarEdition>
-      </AvatarWrapper>
-      <FormContainer>
-        <InputWrapper>
-          <StyledLabel htmlFor='name'>
-            Name:
-            <StyledInput {...register('name')} />
-          </StyledLabel>
-          <button>Edit</button>
-        </InputWrapper>
-        <InputWrapper>
-          <StyledLabel htmlFor='surname'>
-            Surname:
-            <StyledInput {...register('surname')} />
-          </StyledLabel>
-          <button>Edit</button>
-        </InputWrapper>
-        <InputWrapper>
-          <StyledLabel htmlFor='language'>
-            Language:
-            <StyledSelect {...register('language')}>
-              {LANGUAGES.map((language, index) => (
-                <option key={index} value={language}>
-                  {language}
-                </option>
-              ))}
-            </StyledSelect>
-          </StyledLabel>
-          <button>Edit</button>
-        </InputWrapper>
-        <InputWrapper>
-          <StyledLabel htmlFor='country'>
-            Country:
-            <StyledSelect {...register('country')}>
-              {COUNTRIES.map((country, index) => (
-                <option key={index} value={country}>
-                  {country}
-                </option>
-              ))}
-            </StyledSelect>
-          </StyledLabel>
-          <button>Edit</button>
-        </InputWrapper>
-        <InputWrapper>
-          <StyledLabel htmlFor='email'>
-            Email:
-            <StyledInput {...register('email')} />
-          </StyledLabel>
-          <button>Edit</button>
-        </InputWrapper>
-        <InputWrapper>
-          <StyledLabel htmlFor='password'>
-            Password:
-            <div
+    <ProfileInformationOuterContainer>
+      <h1>Change your personal information</h1>
+      <ProfileInformationContainer onSubmit={handleSubmit(onSubmit)}>
+        <AvatarWrapper>
+          {avatarPreview ? (
+            <AvatarPreview src={avatarPreview} alt='Avatar Preview' />
+          ) : (
+            <AvatarPreview src={user.avatar} alt='My profile photo' />
+          )}
+          <AvatarEdition>
+            <AvatarLabel htmlFor='avatar-input'>
+              <img src={PencilIcon} alt='Edit Avatar' />
+            </AvatarLabel>
+            <input
+              name='avatar'
+              type='file'
+              id='avatar-input'
+              {...register('avatar')}
+              onChange={handleAvatarChange}
               style={{
-                display: 'flex',
-                alignItems: 'center',
-                position: 'relative'
+                position: 'absolute',
+                width: '100%',
+                height: '100%',
+                overflow: 'hidden',
+                clip: 'rect(1px, 1px, 1px, 1px)',
+                opacity: 0
               }}
-            >
-              <StyledInput
-                type={showPassword ? 'text' : 'password'}
-                {...register('password')}
-              />
-              <button
-                type='button'
-                onClick={() => setShowPassword(!showPassword)}
-                style={{
-                  position: 'absolute',
-                  right: 0,
-                  padding: '0.3vw',
-                  background: 'none',
-                  border: 'none',
-                  cursor: 'pointer'
-                }}
-              >
-                {showPassword ? 'Hide' : 'Show'}
-              </button>
-            </div>
-          </StyledLabel>
-          <button>Edit</button>
-        </InputWrapper>
-        <InputWrapper>
-          <StyledLabel htmlFor='paymentMethod'>
-            Payment method:
-            <StyledSelect {...register('paymentMethod')}>
-              {PAYMENTMETHODS.map((paymentMethod, index) => (
-                <option key={index} value={paymentMethod}>
-                  {paymentMethod}
-                </option>
-              ))}
-            </StyledSelect>
-          </StyledLabel>
-          <button>Edit</button>
-        </InputWrapper>
-        <SubmitButton type='submit' disabled={!formState.isDirty}>
-          Apply changes
-        </SubmitButton>
-      </FormContainer>
-    </ProfileInformationContainer>
+            />
+          </AvatarEdition>
+        </AvatarWrapper>
+        <FormContainer>
+          <InputWrapper>
+            <StyledLabel htmlFor='name'>
+              Name
+              <StyledInput {...register('name')} />
+            </StyledLabel>
+          </InputWrapper>
+          <InputWrapper>
+            <StyledLabel htmlFor='surname'>
+              Surname
+              <StyledInput {...register('surname')} />
+            </StyledLabel>
+          </InputWrapper>
+          <InputWrapper>
+            <StyledLabel htmlFor='language'>
+              Language
+              <StyledSelect {...register('language')}>
+                {LANGUAGES.map((language, index) => (
+                  <option key={index} value={language}>
+                    {language}
+                  </option>
+                ))}
+              </StyledSelect>
+            </StyledLabel>
+          </InputWrapper>
+          <InputWrapper>
+            <StyledLabel htmlFor='country'>
+              Country
+              <StyledSelect {...register('country')}>
+                {COUNTRIES.map((country, index) => (
+                  <option key={index} value={country}>
+                    {country}
+                  </option>
+                ))}
+              </StyledSelect>
+            </StyledLabel>
+          </InputWrapper>
+          <SubmitButton type='submit' disabled={!formState.isDirty}>
+            Apply changes
+          </SubmitButton>
+        </FormContainer>
+      </ProfileInformationContainer>
+    </ProfileInformationOuterContainer>
   )
 }
 

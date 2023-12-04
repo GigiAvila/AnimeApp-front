@@ -91,7 +91,8 @@ export const FetchMangaDataProvider = ({ children }) => {
     postManga,
     editManga,
     deleteManga,
-    error
+    error,
+    loading
   }
 
   return (
