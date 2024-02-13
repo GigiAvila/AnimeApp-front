@@ -29,8 +29,6 @@ const LoginForm = ({ isModalOpen, setIsModalOpen }) => {
     try {
       const response = await loginOtaku(data.email, data.password)
 
-      console.log('Response from loginOtaku:', response)
-
       if (response && response.success) {
         const user = fetchOtakuData.data.find(
           (user) => user.email === data.email
@@ -40,10 +38,8 @@ const LoginForm = ({ isModalOpen, setIsModalOpen }) => {
       } else {
         setInvalidCredentials(true)
         setIsModalOpen(true)
-        console.log('Modal abierto')
       }
     } catch (error) {
-      console.error('Error during login:', error)
       console.log(error)
     }
   }

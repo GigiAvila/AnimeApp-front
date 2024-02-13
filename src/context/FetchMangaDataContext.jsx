@@ -7,7 +7,7 @@ export const useFetchMangaData = () => {
 }
 
 export const FetchMangaDataProvider = ({ children }) => {
-  const [fetchMangaData, setFetchMangaData] = useState({ data: [] })
+  const [fetchMangaData, setFetchMangaData] = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
 
@@ -21,7 +21,8 @@ export const FetchMangaDataProvider = ({ children }) => {
 
       const response = await fetch('http://localhost:4001/api/mangas')
       const result = await response.json()
-      setFetchMangaData(result)
+      setFetchMangaData(result.data)
+      // console.log(result.data)
     } catch (error) {
       console.error('Error fetching Manga data:', error)
       setError(error)

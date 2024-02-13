@@ -1,30 +1,57 @@
-import React, { useEffect, useState } from 'react';
-import { FavoritePreviewContainer, MangaCoverContainer, InfoContainer, AuthorYearInfo, VolumesAndContinueInfo, ReadingIconWrapper } from './Preview.Styles';
-import { usePreviousReading } from '../../../../hooks/usePreviousReading';
-import readingIcon from '../../../../assets/libro.png';
-import { MANGAS } from '../../../../data/MangaData';
+import React, { useState } from 'react'
+import {
+  FavoritePreviewContainer,
+  MangaCoverContainer,
+  InfoContainer,
+  AuthorYearInfo,
+  VolumesAndContinueInfo,
+  ReadingIconWrapper
+} from './Preview.Styles'
+import { usePreviousReading } from '../../../../hooks/usePreviousReading'
+import readingIcon from '../../../../assets/libro.png'
+import { useFetchOtakuData } from '../../../../context/FetchOtakuDataContext'
+import { useAuth } from '../../../../hooks/useAuth'
 
-const sortedMangas = [...MANGAS].sort((a, b) => b._fans.length - a._fans.length);
+const FavoritePreview = ({ selectedManga, sortedMangas }) => {
+  const { user } = useAuth()
+  const { updatePreviousReadings } = useFetchOtakuData()
+  const { readings, addReading } = usePreviousReading()
 
-const FavoritePreview = ({ selectedManga }) => {
-  const { readings, addReading } = usePreviousReading();
-  const [displayedManga, setDisplayedManga] = useState(sortedMangas[0]);
+  const [displayedManga, setDisplayedManga] = useState(sortedMangas[0])
 
   if (selectedManga && selectedManga !== displayedManga) {
-    setDisplayedManga(selectedManga);
+    setDisplayedManga(selectedManga)
   }
 
-  const handleLastReading = () => {
-    addReading(displayedManga);
-    console.log(readings);
-  };
+  const handleLastReading = async () => {
+    if (user && displayedManga) {
+      try {
+        // await addReading(displayedManga)
+        await updatePreviousReadings(user.email, displayedManga._id)
+      } catch (error) {
+        console.error('Error updating previous readings:', error)
+      }
+    } else {
+      console.error('User, displayedManga, or _id is undefined')
+    }
+  }
 
-  const MangaName = selectedManga?.name || sortedMangas[0].name;
-  const MangaArgument = selectedManga?.argument || sortedMangas[0].argument;
-  const MangaAuthor = selectedManga?.author || sortedMangas[0].author;
-  const MangaYear = selectedManga?.year || sortedMangas[0].year;
-  const MangaIssues = selectedManga?.issues || sortedMangas[0].issues;
-  const MangaCover = selectedManga?.cover || sortedMangas[0].cover;
+  const MangaName =
+    selectedManga?.name || (sortedMangas.length > 0 ? sortedMangas[0].name : '')
+  const MangaArgument =
+    selectedManga?.argument ||
+    (sortedMangas.length > 0 ? sortedMangas[0].argument : '')
+  const MangaAuthor =
+    selectedManga?.author ||
+    (sortedMangas.length > 0 ? sortedMangas[0].author : '')
+  const MangaYear =
+    selectedManga?.year || (sortedMangas.length > 0 ? sortedMangas[0].year : '')
+  const MangaIssues =
+    selectedManga?.issues ||
+    (sortedMangas.length > 0 ? sortedMangas[0].issues : '')
+  const MangaCover =
+    selectedManga?.cover ||
+    (sortedMangas.length > 0 ? sortedMangas[0].cover : '')
 
   return (
     <FavoritePreviewContainer>
@@ -39,15 +66,14 @@ const FavoritePreview = ({ selectedManga }) => {
           <h4>{MangaIssues} issues</h4>
         </VolumesAndContinueInfo>
         <ReadingIconWrapper onClick={handleLastReading}>
-          <img src={readingIcon} alt="read now icon" />
+          <img src={readingIcon} alt='read now icon' />
         </ReadingIconWrapper>
       </InfoContainer>
       <MangaCoverContainer>
         <img src={MangaCover} alt='manga cover' />
       </MangaCoverContainer>
     </FavoritePreviewContainer>
-  );
+  )
 }
 
-export default FavoritePreview;
-
+export default FavoritePreview

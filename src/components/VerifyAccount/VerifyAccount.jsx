@@ -11,14 +11,14 @@ import {
   StyledLabel,
   StyledSelect,
   InputWrapper,
-  BgImage
+  BgImage,
+  AvatarLabel,
+  PasswordButton
 } from './VerifyAccount.Styles'
 import PencilIcon from '../../assets/lapiz.png'
 import { COUNTRIES } from '../../data/CountryList'
 import { LANGUAGES } from '../../data/Languages'
-import { PAYMENTMETHODS } from '../../data/PaymentMethod'
 import AvatarImg from '../../assets/404.png'
-import { useAuth } from '../../hooks/useAuth'
 import { useNavigate } from 'react-router-dom'
 import { useFetchOtakuData } from '../../context/FetchOtakuDataContext'
 
@@ -26,32 +26,24 @@ const VerifyAccount = () => {
   const { register, handleSubmit, formState, errors } = useForm({
     defaultValues: {}
   })
-  const { login } = useAuth()
   const navigate = useNavigate()
-  const { registerOtaku, fetchOtakuData } = useFetchOtakuData()
-  const [invalidCredentials, setInvalidCredentials] = useState(false)
+  const { registerOtaku } = useFetchOtakuData()
+  const [showPassword, setShowPassword] = useState(false)
+  const [avatarPreview, setAvatarPreview] = useState(null)
 
   const onSubmit = async (data) => {
-    try {
-      const response = await registerOtaku(data)
+    await registerOtaku(data)
+    navigate('/home')
+  }
 
-      console.log('Response from registerOtaku:', response)
-
-      if (response && response.data.success) {
-        const user = response.otaku
-        login(user)
-        navigate('/home')
-        console.log('Otaku registration successful', response)
-      } else {
-        setInvalidCredentials(true)
-        const errorMessage = response.data
-          ? response.data.message
-          : 'Registration failed'
-        console.log('Registration failed:', errorMessage)
+  const handleAvatarChange = (e) => {
+    const file = e.target.files[0]
+    if (file) {
+      const reader = new FileReader()
+      reader.onloadend = () => {
+        setAvatarPreview(reader.result)
       }
-    } catch (error) {
-      console.error('Error during registration:', error)
-      setInvalidCredentials(true)
+      reader.readAsDataURL(file)
     }
   }
 
@@ -62,9 +54,22 @@ const VerifyAccount = () => {
       <p>Please complete the information below to finish the registration</p>
       <ProfileInformationContainer onSubmit={handleSubmit(onSubmit)}>
         <AvatarWrapper>
-          <img src={AvatarImg} alt='My profile photo' />
+          {avatarPreview ? (
+            <img src={avatarPreview} alt='Avatar Preview' />
+          ) : (
+            <img src={AvatarImg} alt='My profile photo' />
+          )}
           <AvatarEdition>
-            <img src={PencilIcon} alt='Pencil logo for photo edition' />
+            <AvatarLabel htmlFor='avatar-input'>
+              <img src={PencilIcon} alt='Edit Avatar' />
+            </AvatarLabel>
+            <input
+              name='avatar'
+              type='file'
+              id='avatar-input'
+              {...register('avatar')}
+              onChange={handleAvatarChange}
+            />
           </AvatarEdition>
         </AvatarWrapper>
         <FormContainer>
@@ -78,7 +83,6 @@ const VerifyAccount = () => {
               />
             </StyledLabel>
             {errors && errors.name && <span>Este campo es requerido</span>}
-            <button>Edit</button>
           </InputWrapper>
           <InputWrapper>
             <StyledLabel htmlFor='surname'>
@@ -90,7 +94,6 @@ const VerifyAccount = () => {
               />
             </StyledLabel>
             {errors && errors.surname && <span>Este campo es requerido</span>}
-            <button>Edit</button>
           </InputWrapper>
           <InputWrapper>
             <StyledLabel htmlFor='language'>
@@ -108,8 +111,6 @@ const VerifyAccount = () => {
                 ))}
               </StyledSelect>
             </StyledLabel>
-
-            <button>Edit</button>
           </InputWrapper>
           <InputWrapper>
             <StyledLabel htmlFor='country'>
@@ -126,8 +127,6 @@ const VerifyAccount = () => {
                 ))}
               </StyledSelect>
             </StyledLabel>
-
-            <button>Edit</button>
           </InputWrapper>
           <InputWrapper>
             <StyledLabel htmlFor='email'>
@@ -139,37 +138,26 @@ const VerifyAccount = () => {
               />
             </StyledLabel>
             {errors && errors.email && <span>Este campo es requerido</span>}
-            <button>Edit</button>
           </InputWrapper>
           <InputWrapper>
             <StyledLabel htmlFor='password'>
               Password:
-              <StyledInput
-                id='password'
-                name='password'
-                type='password'
-                {...register('password', { required: true })}
-              />
+              <div>
+                <StyledInput
+                  id='password'
+                  name='password'
+                  type={showPassword ? 'text' : 'password'}
+                  {...register('password', { required: true })}
+                />
+                <PasswordButton
+                  type='button'
+                  onClick={() => setShowPassword(!showPassword)}
+                >
+                  {showPassword ? 'Hide' : 'Show'}
+                </PasswordButton>
+              </div>
             </StyledLabel>
             {errors && errors.password && <span>Este campo es requerido</span>}
-            <button>Edit</button>
-          </InputWrapper>
-          <InputWrapper>
-            <StyledLabel htmlFor='paymentMethod'>
-              Payment method:
-              <StyledSelect
-                id='paymentMethod'
-                name='paymentMethod'
-                {...register('paymentMethod', { required: true })}
-              >
-                {PAYMENTMETHODS.map((paymentMethod, index) => (
-                  <option key={index} value={paymentMethod}>
-                    {paymentMethod}
-                  </option>
-                ))}
-              </StyledSelect>
-            </StyledLabel>
-            <button>Edit</button>
           </InputWrapper>
 
           <SubmitButton type='submit' disabled={!formState.isDirty}>

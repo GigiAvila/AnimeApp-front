@@ -1,4 +1,5 @@
-export const mangaEstructure =[{
+export const mangaEstructure = [
+  {
     _mangaId: 0,
     name: '',
     author: '',
@@ -6,7 +7,8 @@ export const mangaEstructure =[{
     principalCharacter: '',
     isOngoing: true,
     _fans: [],
-    issues: 0,   
+    issues: 0,
     argument: '',
-    cover: '',
-  }]
+    cover: ''
+  }
+]

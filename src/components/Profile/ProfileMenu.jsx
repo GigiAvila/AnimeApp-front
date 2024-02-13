@@ -12,11 +12,6 @@ export const ProfileMenu = () => {
       <h2>General</h2>
       <MenuList>
         <MenuElementContainer>
-          <MenuElement to='premium'>
-            <p>Subscription information</p>
-          </MenuElement>
-        </MenuElementContainer>
-        <MenuElementContainer>
           <MenuElement to='myInformation'>
             <p>Change personal information</p>
           </MenuElement>

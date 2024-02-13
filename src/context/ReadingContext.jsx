@@ -1,34 +1,50 @@
-import React, { createContext, useCallback, useState, useEffect } from 'react';
-import { mangaEstructure } from '../data/MangaEstructure';
+import React, { createContext, useCallback, useState, useEffect } from 'react'
+import { mangaEstructure } from '../data/MangaEstructure'
+import { useAuth } from '../hooks/useAuth'
 
-
-export const ReadingContext = createContext();
-
+export const ReadingContext = createContext()
 
 export const ReadingContextProvider = ({ children }) => {
-  const [readings, setReadings] = useState(() => {
-    //LAZY INIT
-    const localReadings = localStorage.getItem('previous-readings');
-    return localReadings ? JSON.parse(localReadings) : mangaEstructure;
-  });
+  const { user } = useAuth()
 
+  const initialReadings = user ? user.previousReadings : ''
+
+  const [userReadings, setUserReadings] = useState(() => {
+    return initialReadings
+  })
+
+  useEffect(() => {
+    setUserReadings(user ? user.previousReadings : '')
+  }, [user])
 
   const addReading = useCallback((reading) => {
-    setReadings((prevState) => [...prevState, { ...reading }])
-
+    setUserReadings((prevReadings) => {
+      console.log('adding reading', reading)
+      return [...prevReadings, { ...reading }]
+    })
   }, [])
 
   useEffect(() => {
-    localStorage.setItem('previous-readings', JSON.stringify(readings));
-  }, [readings])
+    localStorage.setItem('previous-readings', JSON.stringify(userReadings))
+    console.log('readings in context', userReadings)
+  }, [userReadings])
 
-  const removeReading = useCallback((readingId) => {
-    setReadings((prevState) => prevState.filter((reading) => reading._mangaId !== readingId))
+  const removeReading = useCallback((id) => {
+    setUserReadings((prevReadings) =>
+      prevReadings.filter((reading) => reading !== id)
+    )
   }, [])
 
   return (
-    <ReadingContext.Provider value={{ readings, addReading, removeReading }}>
+    <ReadingContext.Provider
+      value={{
+        readings: userReadings,
+        setReadings: setUserReadings,
+        addReading,
+        removeReading
+      }}
+    >
       {children}
     </ReadingContext.Provider>
-  );
-};
+  )
+}

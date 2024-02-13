@@ -3,7 +3,7 @@ import verifyBg from '../../assets/verifyBg.jpg'
 
 export const BgAccountContainer = styled.div`
   width: 100vw;
-  height: 100vh;
+  height: auto;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -21,7 +21,7 @@ export const BgAccountContainer = styled.div`
 
 export const BgImage = styled.div`
   width: 100%;
-  height: 35%;
+  height: 30vh;
   background-image: url(${verifyBg});
   background-repeat: no-repeat;
   background-size: cover;
@@ -30,7 +30,7 @@ export const BgImage = styled.div`
 
 export const ProfileInformationContainer = styled.form`
   width: 100%;
-  height: 65%;
+  height: 100vh;
   display: flex;
   gap: 2vw;
   align-items: center;
@@ -39,21 +39,21 @@ export const ProfileInformationContainer = styled.form`
 `
 
 export const AvatarWrapper = styled.div`
-  width: 250px;
-  height: 250px;
+  width: 200px;
+  height: 200px;
   display: flex;
   flex-direction: column;
   position: relative;
 
   > img {
     width: 100%;
-    height: 100%;
+    height: 95%;
     border-radius: 50%;
     object-fit: cover;
   }
 `
 
-export const AvatarEdition = styled.button`
+export const AvatarEdition = styled.div`
   font-size: 0.7vw;
   width: 3vw;
   padding: 0.2vw;
@@ -67,6 +67,20 @@ export const AvatarEdition = styled.button`
   right: 0;
   cursor: pointer;
 
+  > input {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    opacity: 0;
+  }
+`
+
+export const AvatarLabel = styled.label`
+  width: 3vw;
+  padding: 0.2vw;
+  cursor: pointer;
+
   > img {
     width: 100%;
     height: auto;
@@ -77,60 +91,100 @@ export const AvatarEdition = styled.button`
 export const FormContainer = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: flex-end;
-  gap: 0.5vw;
+  align-items: flex-start;
+  gap: 0.3vw;
 `
 
 export const InputWrapper = styled.div`
   display: flex;
-  gap: 2vw;
-  align-items: center;
-
-  > button {
-    height: 4vh;
-    width: 4vw;
-    padding: 0.5vw 0.3vw;
-    margin: 0 auto;
-    font-size: 0.7vw;
-    cursor: pointer;
-  }
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  width: 100%;
 `
 
 export const StyledLabel = styled.label`
   display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  gap: 1vw;
+  flex-direction: column;
+  align-items: flex-start;
+  font-size: 1vw;
+  color: black;
+  padding: 0.3vw;
+  gap: 0.3vw;
+
+  > div {
+    display: flex;
+    position: relative;
+  }
 `
 
 export const StyledInput = styled.input`
-  height: 2vh;
-  width: 20vw;
-  padding: 1vw 0.3vw;
-  border-radius: 4px;
+  height: 4vh;
+  width: 25vw;
+  font-size: 0.8vw;
+  color: black;
+  padding: 0.5vw;
   border: none;
+  border-bottom: 1px solid black;
+  background: transparent;
+  outline: none;
+  font-size: 0.8vw;
 `
 
 export const StyledSelect = styled.select`
-  height: 2vh;
-  width: 20vw;
-  padding: 1vw 0.3vw;
+  height: 4vh;
+  width: 25vw;
+  color: black;
+  padding: 0.5vw;
+  border: none;
+  border-bottom: 1px solid black;
+  margin: 0.5vw 0;
+  background: transparent;
+  outline: none;
+  font-size: 0.8vw;
+
+  > option {
+    height: 4vh;
+    width: 20vw;
+    color: black;
+    background: white;
+    font-size: 0.8vw;
+  }
+`
+
+export const PasswordButton = styled.button`
+  padding: 0.3vw;
   border-radius: 4px;
   border: none;
-  background-color: white;
+  outline: none;
+  background: white;
   color: black;
+  position: absolute;
+  height: auto;
+  right: 0;
+  margin: 0.2vw;
 
-  & option {
-    background-color: white;
-    color: black;
+  &:hover {
+    background: black;
+    color: white;
   }
 `
 
 export const SubmitButton = styled.button`
+  align-self: center;
   width: 8vw;
-  padding: 0.5vw;
-  border-radius: 4px;
-  border: none;
+  font-size: 0.8vw;
+  font-weight: bold;
+  background-color: #7c2629;
+  color: #ecece6;
+  outline: none;
   cursor: pointer;
+  border: none;
+  padding: 0.5vw;
+  border-radius: 5px;
   align-self: flex-end;
+
+  &:hover {
+    filter: contrast(120%);
+  }
 `

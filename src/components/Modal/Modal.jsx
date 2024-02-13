@@ -1,32 +1,60 @@
-import React from 'react';
-import { Overlayer, ModalContainer, TextContainer, ActionsContainer, IconWrapper } from './Modal.Styles';
-import CloseIcon from '../../assets/close.png';
+import React from 'react'
+import {
+  Overlayer,
+  ModalContainer,
+  TextContainer,
+  ActionsContainer,
+  IconWrapper
+} from './Modal.Styles'
+import CloseIcon from '../../assets/close.png'
+import { useNavigate } from 'react-router-dom'
+import { useAuth } from '../../hooks/useAuth'
 
-
-const Modal = ({ setIsModalOpen, setNewAccount, title, content, textButton, gif }) => {
+const Modal = ({
+  setIsModalOpen,
+  setNewAccount,
+  title,
+  content,
+  textButton,
+  gif
+}) => {
+  const { logout } = useAuth()
+  const navigate = useNavigate()
 
   const handleOpenModal = () => {
-    setIsModalOpen(false);
-  };
+    setIsModalOpen(false)
+  }
 
   const handleLoginButtonClick = () => {
-   
     if (textButton === 'Log In') {
-      setNewAccount(false);
+      setNewAccount(false)
     }
-    handleOpenModal();
-  };
+    if (textButton === 'Okidoki!') {
+      logout()
+      navigate('/')
+    }
+    handleOpenModal()
+  }
 
   return (
     <Overlayer>
       <ModalContainer>
         <TextContainer>
           <IconWrapper onClick={handleOpenModal}>
-            <img src={CloseIcon} alt="Close modal icon" />
+            <img src={CloseIcon} alt='Close modal icon' />
           </IconWrapper>
           <h1>{title}</h1>
-          <iframe src={gif} width="200" height="200" frameBorder="0" className="giphy-embed" allowFullScreen></iframe>
-          <p><a href="https://giphy.com/gifs/head-hero-boku-naiatn5LxTOsU"></a></p>
+          <iframe
+            src={gif}
+            width='200'
+            height='200'
+            frameBorder='0'
+            className='giphy-embed'
+            allowFullScreen
+          ></iframe>
+          <p>
+            <a href='https://giphy.com/gifs/head-hero-boku-naiatn5LxTOsU'></a>
+          </p>
           <p>{content}</p>
         </TextContainer>
         <ActionsContainer>
@@ -35,7 +63,7 @@ const Modal = ({ setIsModalOpen, setNewAccount, title, content, textButton, gif 
         </ActionsContainer>
       </ModalContainer>
     </Overlayer>
-  );
-};
+  )
+}
 
-export default Modal;
+export default Modal

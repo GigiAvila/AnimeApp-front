@@ -29,7 +29,6 @@ export const LoginContainer = styled.div`
   width: 100vw;
   height: 100vh;
 
-
   h2 {
     font-family: 'Manga', sans-serif;
     position: absolute;
@@ -44,14 +43,13 @@ export const BgPatternLogin = styled.div`
   width: 100vw;
   height: 100vh;
   background: linear-gradient(to bottom, #ecece6, #cccbbb);
-
 `
 export const Circle = styled.div`
-  width: 650px;
-  height: 650px;
+  width: 700px;
+  height: 700px;
   position: absolute;
   top: 7vh;
-  left: 28vw;
+  left: 30vw;
   border-radius: 100%;
   background-color: #8b312c;
   z-index: 2;

@@ -18,12 +18,11 @@ import { useAuth } from '../../../hooks/useAuth'
 import { useForm } from 'react-hook-form'
 import { COUNTRIES } from '../../../data/CountryList'
 import { LANGUAGES } from '../../../data/Languages'
-import { PAYMENTMETHODS } from '../../../data/PaymentMethod'
 import PencilIcon from '../../../assets/lapiz.png'
 
 const ProfileInformation = () => {
   const { editOtaku } = useFetchOtakuData()
-  const { user, login } = useAuth()
+  const { user } = useAuth()
   const { register, handleSubmit, setValue, formState } = useForm({
     defaultValues: {
       name: user.name,
@@ -36,10 +35,7 @@ const ProfileInformation = () => {
       paymentMethod: user.paymentMethod
     }
   })
-
   const [avatarPreview, setAvatarPreview] = useState(null)
-  const [showPassword, setShowPassword] = useState(false)
-  const [isEditing, setIsEditing] = useState(false)
 
   const handleAvatarChange = (e) => {
     const file = e.target.files[0]
@@ -53,10 +49,7 @@ const ProfileInformation = () => {
   }
 
   const onSubmit = (data) => {
-    console.log('previous user info', user)
-    console.log('user with data form changed ', data)
     editOtaku(user.email, data)
-    login(data)
   }
 
   React.useEffect(() => {
@@ -67,7 +60,6 @@ const ProfileInformation = () => {
     setValue('email', user.email)
     setValue('password', user.password)
     setValue('premium', user.premium)
-    setValue('paymentMethod', user.paymentMethod)
     setValue('avatar', user.avatar)
   }, [setValue, user])
 
