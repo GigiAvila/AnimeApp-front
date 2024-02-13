@@ -3,7 +3,9 @@
 
 ## Overview
 
-Welcome to the Manga App, your go-to platform for discovering and enjoying your favorite manga titles! This app provides a user-friendly interface and a variety of features to enhance your manga reading experience.
+Welcome to the Manga App, a fictional platform created for educational purposes, designed to simulate the experience of discovering and enjoying your favorite manga titles! 
+
+This project is developed as part of a study or learning initiative, and it is not a real-world application. Feel free to explore the functionalities, contribute to the project, and use it as a learning resource.
 
 ## Screenshots
 
