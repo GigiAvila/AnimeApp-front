@@ -1,6 +1,6 @@
 @font-face {
   font-family: 'Manga';
-  src: url('./src/assets/mangat.ttf') format('truetype');
+  src: url('./assets/mangat.ttf') format('truetype');
 }
 
 * {
