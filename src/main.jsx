@@ -16,7 +16,7 @@ import ProfileInformation from './components/Profile/ProfileInformation/ProfileI
 import ChangeEmail from './components/Profile/ChangeEmail/ChangeEmail.jsx'
 import { ChangePassword } from './components/Profile/ChangePassword/ChangePassword.jsx'
 import ChangeEmailPage from './pages/ChangeEmailPage.jsx'
-
+import './assets/mangat.ttf'
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <AuthProvider>
