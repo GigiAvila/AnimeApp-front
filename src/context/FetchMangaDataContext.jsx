@@ -19,7 +19,7 @@ export const FetchMangaDataProvider = ({ children }) => {
     try {
       setLoading(true)
 
-      const response = await fetch('http://localhost:4001/api/mangas')
+      const response = await fetch('https://mern6.vercel.app/api/mangas')
       const result = await response.json()
       setFetchMangaData(result.data)
       // console.log(result.data)
@@ -35,7 +35,7 @@ export const FetchMangaDataProvider = ({ children }) => {
     try {
       const formData = new FormData()
 
-      const response = await fetch('http://localhost:4001/api/mangas', {
+      const response = await fetch('https://mern6.vercel.app/api/mangas', {
         method: 'POST',
         body: formData
       })
@@ -57,10 +57,13 @@ export const FetchMangaDataProvider = ({ children }) => {
         formData.append(key, newData[key])
       }
 
-      const response = await fetch(`http://localhost:4001/api/mangas/${id}`, {
-        method: 'PUT',
-        body: formData
-      })
+      const response = await fetch(
+        `https://mern6.vercel.app/api/mangas/${id}`,
+        {
+          method: 'PUT',
+          body: formData
+        }
+      )
 
       const result = await response.json()
       console.log('PUT response:', result)
@@ -73,9 +76,12 @@ export const FetchMangaDataProvider = ({ children }) => {
 
   const deleteManga = async (id) => {
     try {
-      const response = await fetch(`http://localhost:4001/api/mangas/${id}`, {
-        method: 'DELETE'
-      })
+      const response = await fetch(
+        `https://mern6.vercel.app/api/mangas/${id}`,
+        {
+          method: 'DELETE'
+        }
+      )
 
       const result = await response.json()
       console.log('DELETE response:', result)

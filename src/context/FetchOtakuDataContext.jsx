@@ -21,7 +21,7 @@ export const FetchOtakuDataProvider = ({ children }) => {
     try {
       setLoading(true)
 
-      const response = await fetch('http://localhost:4001/api/otakus')
+      const response = await fetch('https://mern6.vercel.app/api/otakus')
       const result = await response.json()
       setFetchOtakuData(result)
 
@@ -49,7 +49,7 @@ export const FetchOtakuDataProvider = ({ children }) => {
       }
 
       const response = await fetch(
-        'http://localhost:4001/api/otakus/register',
+        'https://mern6.vercel.app/api/otakus/register',
         {
           method: 'POST',
           body: formData
@@ -114,7 +114,7 @@ export const FetchOtakuDataProvider = ({ children }) => {
       setLoading(true)
 
       const response = await fetch(
-        `http://localhost:4001/api/otakus/change-email/${emailConfirmationToken}`,
+        `https://mern6.vercel.app/api/otakus/change-email/${emailConfirmationToken}`,
         {
           method: 'PUT',
           headers: {
@@ -155,7 +155,7 @@ export const FetchOtakuDataProvider = ({ children }) => {
       }
 
       const response = await fetch(
-        `http://localhost:4001/api/otakus/change-password/${email}`,
+        `https://mern6.vercel.app/api/otakus/change-password/${email}`,
         {
           method: 'PUT',
           headers: {
@@ -195,7 +195,7 @@ export const FetchOtakuDataProvider = ({ children }) => {
       }
 
       const response = await fetch(
-        `http://localhost:4001/api/otakus/${email}`,
+        `https://mern6.vercel.app/api/otakus/${email}`,
         {
           method: 'PUT',
           body: formData
@@ -223,9 +223,12 @@ export const FetchOtakuDataProvider = ({ children }) => {
 
   const deleteOtaku = async (id) => {
     try {
-      const response = await fetch(`http://localhost:4001/api/otakus/${id}`, {
-        method: 'DELETE'
-      })
+      const response = await fetch(
+        `https://mern6.vercel.app/api/otakus/${id}`,
+        {
+          method: 'DELETE'
+        }
+      )
 
       const result = await response.json()
       console.log('DELETE response:', result)
@@ -239,13 +242,16 @@ export const FetchOtakuDataProvider = ({ children }) => {
   const loginOtaku = async (email, password) => {
     try {
       setLoading(true)
-      const response = await fetch('http://localhost:4001/api/otakus/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ email, password })
-      })
+      const response = await fetch(
+        'https://mern6.vercel.app/api/otakus/login',
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ email, password })
+        }
+      )
 
       const data = await response.json()
       console.log('Response from loginOtaku:', data)
@@ -259,7 +265,7 @@ export const FetchOtakuDataProvider = ({ children }) => {
   }
 
   const sendGmail = async ({ email, name }) => {
-    const url = 'http://localhost:4001/api/email'
+    const url = 'https://mern6.vercel.app/api/email'
     const data = {
       gmail: email,
       name: name
@@ -291,7 +297,7 @@ export const FetchOtakuDataProvider = ({ children }) => {
     try {
       setLoading(true)
       const response = await fetch(
-        `http://localhost:4001/api/otakus/history/${email}`,
+        `https://mern6.vercel.app/api/otakus/history/${email}`,
         {
           method: 'PUT',
           headers: {
@@ -328,7 +334,7 @@ export const FetchOtakuDataProvider = ({ children }) => {
     try {
       setLoading(true)
       const response = await fetch(
-        `http://localhost:4001/api/otakus/history/remove/${email}`,
+        `https://mern6.vercel.app/api/otakus/history/remove/${email}`,
         {
           method: 'PUT',
           headers: {
