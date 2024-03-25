@@ -49,7 +49,7 @@ export const Circle = styled.div`
   height: 700px;
   position: absolute;
   top: 7vh;
-  left: 30vw;
+  left: 25vw;
   border-radius: 100%;
   background-color: #8b312c;
   z-index: 2;
